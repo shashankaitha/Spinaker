@@ -1,0 +1,73 @@
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/httpsession.py", line 319, in send
+    conn = manager.connection_from_url(request.url)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/urllib3/poolmanager.py", line 298, in connection_from_url
+    return self.connection_from_host(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/urllib3/poolmanager.py", line 245, in connection_from_host
+    return self.connection_from_context(request_context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/urllib3/poolmanager.py", line 260, in connection_from_context
+    return self.connection_from_pool_key(pool_key, request_context=request_context)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/urllib3/poolmanager.py", line 282, in connection_from_pool_key
+    self.pools[pool_key] = pool
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/urllib3/_collections.py", line 74, in __setitem__
+    self.dispose_func(evicted_value)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/urllib3/poolmanager.py", line 173, in <lambda>
+    self.pools = RecentlyUsedContainer(num_pools, dispose_func=lambda p: p.close())
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/urllib3/connectionpool.py", line 492, in close
+    conn.close()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/awsrequest.py", line 79, in close
+    super(AWSConnection, self).close()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/http/client.py", line 935, in close
+    sock.close()   # close it manually... there may be other refs
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/socket.py", line 501, in close
+    self._real_close()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/ssl.py", line 1300, in _real_close
+    super()._real_close()
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/socket.py", line 495, in _real_close
+    _ss.close(self)
+OSError: [Errno 41] Protocol wrong type for socket
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mma0513/s3_encrypt.py", line 76, in <module>
+    encrypt_buckets(keyArn)
+  File "/Users/mma0513/s3_encrypt.py", line 44, in encrypt_buckets
+    enc = s3.get_bucket_encryption(Bucket=bucket['Name'])
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/client.py", line 386, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/client.py", line 691, in _make_api_call
+    http, parsed_response = self._make_request(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/client.py", line 711, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/endpoint.py", line 102, in make_request
+    return self._send_request(request_dict, operation_model)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/endpoint.py", line 136, in _send_request
+    while self._needs_retry(attempts, operation_model, request_dict,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/endpoint.py", line 253, in _needs_retry
+    responses = self._event_emitter.emit(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/hooks.py", line 356, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/hooks.py", line 228, in emit
+    return self._emit(event_name, kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/hooks.py", line 211, in _emit
+    response = handler(**kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/retryhandler.py", line 183, in __call__
+    if self._checker(attempts, response, caught_exception):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/retryhandler.py", line 250, in __call__
+    should_retry = self._should_retry(attempt_number, response,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/retryhandler.py", line 269, in _should_retry
+    return self._checker(attempt_number, response, caught_exception)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/retryhandler.py", line 316, in __call__
+    checker_response = checker(attempt_number, response,
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/retryhandler.py", line 222, in __call__
+    return self._check_caught_exception(
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/retryhandler.py", line 359, in _check_caught_exception
+    raise caught_exception
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/endpoint.py", line 200, in _do_get_response
+    http_response = self._send(request)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/endpoint.py", line 269, in _send
+    return self.http_session.send(request)
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/botocore/httpsession.py", line 368, in send
+    raise HTTPClientError(error=e)
+botocore.exceptions.HTTPClientError: An HTTP Client raised an unhandled exception: [Errno 41] Protocol wrong type for socket
