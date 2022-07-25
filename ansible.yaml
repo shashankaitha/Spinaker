@@ -1,0 +1,37 @@
+---
+- name: Init Script
+  hosts: localhost
+  become: true
+  tasks:
+        - name: Import a key from a url
+          rpm_key:
+            state: present
+            key: https://pkg.cloudflare.com/pubkey.gpg
+            validate_certs: no
+
+        - name: Install the cloudflare rpm from a remote repo
+          yum:
+            name: https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm
+            state: present
+            disable_gpg_check: yes
+
+        - name: ansible configuration
+          block:
+            - name: Create ansible directory
+              file:
+                path: /tmp/test
+                state: directory
+                owner: awx
+                group: root
+
+            - name: copy pem keys & config
+              copy:
+                src: "{{ item.src }}"
+                dest: "{{ item.dest }}"
+                mode: 0400
+                owner: awx
+                group: root
+              with_items:
+                - { src: /tmp/1.txt, dest: /tmp/test/1.txt }
+                - { src: /tmp/2.txt, dest: /tmp/test/2.txt }
+                - { src: /tmp/3.txt,  dest: /tmp/test/3.txt }
